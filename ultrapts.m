@@ -1,7 +1,8 @@
 function [x, w, v, t] = ultrapts(n, lambda, int, meth)
 %ULTRAPTS    Ultraspherical points and Gauss-Gegenbauer quadrature weights.
 %   [X]= ULTRAPTS(N, LAMBDA) returns N ultraspherical points X in (-1,1)
-%   where the ultraspherical weight function is w(x)=(1-x^2)^(LAMBDA-1/2).
+%   where the ultraspherical weight function is w(x)=(1-x^2)^(LAMBDA-1/2),
+%   LAMBDA > -.5, LAMBDA ~=0.
 %
 %   [X, W] = ULTRAPTS(N, LAMBDA) returns also a row vector W of weights for
 %   Gauss-Gegenbauer quadrature.
@@ -17,10 +18,16 @@ function [x, w, v, t] = ultrapts(n, lambda, int, meth)
 %   method to use.
 %    METHOD = 'REC' uses the recurrence relation for the ultraspherical 
 %     polynomials and their derivatives to perform Newton-Raphson iteration. 
-%     If 0<=LAMBDA<=1 the convergence is guaranteed.
+%     If 0 <= LAMBDA <= 1, then the convergence is guaranteed.
+%     Default for: LAMBDA <= 3 and N < 100; 3 < LAMBDA <= 8 and N < 500; 
+%     8 < LAMBDA <= 13 and N < 1000; 13 < LAMBDA <= 20 and N < 2000;
+%     LAMBDA > 20 and N < 3000.
 %    METHOD = 'ASY' uses an algorithm adapted from the Hale-Townsend fast 
 %     algorithm based upon asymptotic formulae, which is fast and accurate.
-%     If 0<=LAMBDA<=1 the convergence is guaranteed.
+%     If 0 <= LAMBDA <= 1, then the convergence is guaranteed.
+%     Default for: LAMBDA <= 3 and N >= 100; 3 < LAMBDA <= 8 and N >= 500; 
+%     8 < LAMBDA <= 13 and N >= 1000; 13 < LAMBDA <= 20 and N >= 2000;
+%     LAMBDA > 20 and N >= 3000.
 %    METHOD = 'GW' will use the traditional Golub-Welsch eigensystem method,
 %       which is maintained mostly for historical reasons.
 %   
